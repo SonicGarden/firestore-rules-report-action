@@ -5,6 +5,7 @@ import axios from 'axios'
 async function run(): Promise<void> {
   try {
     const token = core.getInput('token', {required: true})
+
     const reportUrl: string = core.getInput('report-url')
     const result = await axios.get(reportUrl)
     const data = result.data
@@ -47,7 +48,7 @@ async function run(): Promise<void> {
       issue_number,
       owner,
       repo,
-      body: `テストが行われてないルールの行\n\`\`\`\n${content}\n\`\`\``
+      body: `Lack of test rule lines!\n\`\`\`\n${content}\n\`\`\``
     })
   } catch (error) {
     core.setFailed(error.message)

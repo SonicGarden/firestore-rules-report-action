@@ -83,7 +83,7 @@ function run() {
                 issue_number,
                 owner,
                 repo,
-                body: `テストが行われてないルールの行\n\`\`\`\n${content}\n\`\`\``
+                body: `Lack of test rule lines!\n\`\`\`\n${content}\n\`\`\``
             });
         }
         catch (error) {
