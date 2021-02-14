@@ -4,7 +4,7 @@ import axios from 'axios'
 
 async function run(): Promise<void> {
   try {
-    const token = core.getInput('github-token', {required: true})
+    const token = core.getInput('token', {required: true})
     const reportUrl: string = core.getInput('report-url')
     const result = await axios.get(reportUrl)
     const data = result.data

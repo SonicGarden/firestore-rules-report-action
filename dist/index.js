@@ -45,7 +45,7 @@ const axios_1 = __importDefault(__nccwpck_require__(6545));
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const token = core.getInput('github-token', { required: true });
+            const token = core.getInput('token', { required: true });
             const reportUrl = core.getInput('report-url');
             const result = yield axios_1.default.get(reportUrl);
             const data = result.data;
