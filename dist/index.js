@@ -76,7 +76,8 @@ function run() {
             }
             const content = output
                 .sort((a, b) => (a.number > b.number ? 1 : -1))
-                .map(a => `${a.number} ${a.line}`);
+                .map(a => `${a.number} ${a.line}`)
+                .join('\n');
             const { issue: { number: issue_number }, repo: { owner, repo } } = github.context;
             const octokit = github.getOctokit(token);
             octokit.issues.createComment({

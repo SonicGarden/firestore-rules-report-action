@@ -39,6 +39,7 @@ async function run(): Promise<void> {
     const content = output
       .sort((a, b) => (a.number > b.number ? 1 : -1))
       .map(a => `${a.number} ${a.line}`)
+      .join('\n')
     const {
       issue: {number: issue_number},
       repo: {owner, repo}
