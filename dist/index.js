@@ -64,12 +64,15 @@ function run() {
                 .map(a => `${a.number} ${a.line}`)
                 .join('\n');
             const { issue: { number: issue_number }, repo: { owner, repo } } = github.context;
+            const comment = output.length > 0
+                ? `:scream: Lack of test rule lines!\n\`\`\`\n${content}\n\`\`\``
+                : ':tada: Security rule test is covered!';
             const octokit = github.getOctokit(token);
             octokit.issues.createComment({
                 issue_number,
                 owner,
                 repo,
-                body: `Lack of test rule lines!\n\`\`\`\n${content}\n\`\`\``
+                body: comment
             });
         }
         catch (error) {
