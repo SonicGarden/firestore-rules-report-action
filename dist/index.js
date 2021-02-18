@@ -49,17 +49,8 @@ function run() {
             const reportUrl = core.getInput('report-url');
             const result = yield axios_1.default.get(reportUrl);
             const data = result.data;
-            let allowLines = [];
-            for (const [index, line] of data.rules.files[0].content
-                .split('\n')
-                .entries()) {
-                if (/\s*allow/.test(line)) {
-                    allowLines.push(index + 1);
-                }
-            }
             const output = [];
             for (const report of data.report) {
-                allowLines = allowLines.filter(allowLine => allowLine !== report.sourcePosition.line);
                 if (!('values' in report)) {
                     const lineNumber = report.sourcePosition.line;
                     output.push({
@@ -67,12 +58,6 @@ function run() {
                         line: data.rules.files[0].content.split('\n')[lineNumber - 1]
                     });
                 }
-            }
-            for (const allowLine of allowLines) {
-                output.push({
-                    number: allowLine,
-                    line: data.rules.files[0].content.split('\n')[allowLine - 1]
-                });
             }
             const content = output
                 .sort((a, b) => (a.number > b.number ? 1 : -1))
