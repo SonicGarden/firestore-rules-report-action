@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import axios from 'axios'
+import replaceComment from '@aki77/actions-replace-comment'
 
 async function run(): Promise<void> {
   try {
@@ -31,12 +32,12 @@ async function run(): Promise<void> {
       output.length > 0
         ? `:scream: Lack of test rule lines!\n\`\`\`\n${content}\n\`\`\``
         : ':tada: Security rule test is covered!'
-    const octokit = github.getOctokit(token)
-    octokit.issues.createComment({
+    await replaceComment({
+      token,
       issue_number,
       owner,
       repo,
-      body: comment
+      body: `Firestore rules coverage report!\n${comment}`
     })
   } catch (error) {
     core.setFailed(error.message)
