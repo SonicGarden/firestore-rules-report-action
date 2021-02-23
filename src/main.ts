@@ -1,6 +1,22 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import axios from 'axios'
+import replaceComment, {deleteComment} from '@aki77/actions-replace-comment'
+
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const commentGeneralOptions = () => {
+  const pullRequestId = github.context.issue.number
+  if (!pullRequestId) {
+    throw new Error('Cannot find the PR id.')
+  }
+
+  return {
+    token: core.getInput('token', {required: true}),
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    issue_number: pullRequestId
+  }
+}
 
 async function run(): Promise<void> {
   try {
@@ -31,12 +47,12 @@ async function run(): Promise<void> {
       output.length > 0
         ? `:scream: Lack of test rule lines!\n\`\`\`\n${content}\n\`\`\``
         : ':tada: Security rule test is covered!'
-    const octokit = github.getOctokit(token)
-    octokit.issues.createComment({
+    await replaceComment({
+      token,
       issue_number,
       owner,
       repo,
-      body: comment
+      body: `Firestore rules coverage report!\n${comment}`
     })
   } catch (error) {
     core.setFailed(error.message)
