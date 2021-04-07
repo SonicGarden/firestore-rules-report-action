@@ -48,6 +48,7 @@ function run() {
         try {
             const token = core.getInput('token', { required: true });
             const reportUrl = core.getInput('report-url');
+            core.setOutput('url', reportUrl);
             const result = yield axios_1.default.get(reportUrl);
             const data = result.data;
             const output = [];

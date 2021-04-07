@@ -8,6 +8,8 @@ async function run(): Promise<void> {
     const token = core.getInput('token', {required: true})
 
     const reportUrl: string = core.getInput('report-url')
+    core.setOutput('url', reportUrl)
+
     const result = await axios.get(reportUrl)
     const data = result.data
     const output = []
