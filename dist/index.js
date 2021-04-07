@@ -79,6 +79,7 @@ function run() {
         }
         catch (error) {
             core.setFailed(error);
+            core.setFailed(core.getInput('report-url'));
         }
     });
 }
