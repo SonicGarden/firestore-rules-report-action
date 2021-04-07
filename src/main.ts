@@ -40,7 +40,7 @@ async function run(): Promise<void> {
       body: `Firestore rules coverage report!\n${comment}`
     })
   } catch (error) {
-    core.setFailed(error.message)
+    core.setFailed(error)
   }
 }
 
