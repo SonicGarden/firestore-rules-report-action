@@ -20,9 +20,19 @@ jobs:
       - run: |
           npm run all
   test: # make sure the action works on a clean machine without building
+    # Needs a PR to comment on; fork PRs get a read-only token
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v7
+      - name: Serve stub coverage report
+        run: |
+          nohup python3 -m http.server 8080 --directory .github/fixtures > /dev/null 2>&1 &
+          curl --retry 10 --retry-connrefused --retry-delay 1 -sf http://localhost:8080/coverage-report.json > /dev/null
       - uses: ./
         with:
-          milliseconds: 1000
+          token: ${{ secrets.GITHUB_TOKEN }}
+          report-url: 'http://localhost:8080/coverage-report.json'
