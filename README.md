@@ -24,7 +24,7 @@ jobs:
         run: npm run test
 
       - name: firestore coverage report
-        uses: SonicGarden/firestore-rules-report-action@v1
+        uses: SonicGarden/firestore-rules-report-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           report-url: 'http://localhost:8080/emulator/v1/projects/<databse_name>:ruleCoverage'

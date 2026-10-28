@@ -1,7 +1,10 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import axios from 'axios'
-import replaceComment from '@aki77/actions-replace-comment'
+// CJS パッケージのため ESM からの default import は module.exports 全体になる
+import replaceCommentModule from '@aki77/actions-replace-comment'
+
+const replaceComment = replaceCommentModule.default
 
 async function run(): Promise<void> {
   try {
@@ -42,7 +45,7 @@ async function run(): Promise<void> {
       body: `Firestore rules coverage report!\n${comment}`
     })
   } catch (error) {
-    core.setFailed(error)
+    core.setFailed(error instanceof Error ? error : String(error))
     core.setFailed(JSON.stringify(github.context, null, ' '))
     core.setFailed(core.getInput('report-url'))
   }
