@@ -32,7 +32,7 @@
     "@actions/core": "^3.0.1",
     "@actions/github": "^9.1.1",
     "@aki77/actions-replace-comment": "^0.6.2",
-    "axios": "^1.21.0"
+    "axios": "^1.21.1"
   },
   "devDependencies": {
     "@types/jest": "^30.0.0",
